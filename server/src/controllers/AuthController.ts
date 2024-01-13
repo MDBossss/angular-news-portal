@@ -21,7 +21,6 @@ class AuthController {
         return res.status(401).json({ message: "There is no such user." });
       }
 
-      console.log(currentUser);
       res.status(200).json(currentUser);
     } catch (error) {
       console.error(error);
@@ -104,12 +103,13 @@ class AuthController {
   }
 
   async logout(req: Request, res: Response) {
-    res.cookie("jwtToken", "logout", {
-      expires: new Date(Date.now() + 2 * 1000),
+    res.cookie("jwtToken", "", {
+      expires: new Date(0),
       httpOnly: true,
       sameSite: "none",
       secure: true,
     });
+    console.log(res);
     return res.status(200).json({ message: "Success" });
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { environment } from '../environments/environment';
 type ResponseObserveType = 'response';
 
@@ -15,14 +15,7 @@ export class AuthService {
   );
   public currentUser$: Observable<any> = this.currentUserSubject.asObservable();
 
-  constructor(private http: HttpClient) {
-    this.getProfile().subscribe((user) => {
-      this.setCurrentUser(user);
-    }),
-      (error: any) => {
-        console.error('Error fetching profile: ', error);
-      };
-  }
+  constructor(private http: HttpClient) {}
 
   login(email: string, password: string) {
     let loginHttpOptions = {
@@ -58,36 +51,39 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.clear();
     this.currentUserSubject.next(null);
+    localStorage.removeItem('user');
     return this.http.get(`${environment.apiUrl}/api/auth/logout`, {
       withCredentials: true,
     });
   }
 
   setCurrentUser(user: any) {
-    this.currentUserSubject.next(user.body);
+    this.currentUserSubject.next(user);
   }
 
-  getCurrentUser() {
-    return this.currentUserSubject;
-  }
-
-  private getProfile() {
-    return this.http
-      .get(`${environment.apiUrl}/api/auth/current`, {
-        withCredentials: true,
-        observe: 'response',
-      })
-      .pipe(
-        tap(
-          (response) => this.setCurrentUser(response.body),
-          (error) => {
-            // Handle errors or set the current user to null if no valid token is found
-            console.error('Error fetching user profile:', error);
-            this.setCurrentUser(null);
-          }
-        )
-      );
+  getProfile() {
+    const user = localStorage.getItem('user');
+    if (user) {
+      return this.http
+        .get(`${environment.apiUrl}/api/auth/current`, {
+          withCredentials: true,
+          observe: 'response',
+        })
+        .pipe(
+          tap(
+            (response) => {
+              this.currentUserSubject.next(response.body);
+            },
+            () => {
+              // Handle errors or set the current user to null if no valid token is found
+              this.currentUserSubject.next(null);
+            }
+          )
+        );
+    } else {
+      this.currentUserSubject.next(null);
+      return of(false);
+    }
   }
 }

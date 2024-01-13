@@ -37,9 +37,10 @@ model Post {
 }
 
 model Category {
-  id    String @id @default(uuid())
-  title String
-  Post  Post[]
+  id          String @id @default(uuid())
+  title       String
+  description String
+  Post        Post[]
 }
 
 model Comment {

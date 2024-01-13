@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,6 +10,8 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./register-form.component.scss'],
 })
 export class RegisterFormComponent {
+  user!: User;
+
   registerForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
@@ -17,7 +20,8 @@ export class RegisterFormComponent {
   });
 
   constructor(private authService: AuthService, private router: Router) {
-    if (this.authService.getCurrentUser()) this.router.navigate(['/']);
+    const user = localStorage.getItem('user');
+    if (user) router.navigate(['/']);
   }
 
   get email() {

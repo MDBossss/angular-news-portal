@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -9,9 +9,24 @@ import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './components/home/home.component';
 import { AuthService } from './services/auth.service';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { UserPostsComponent } from './components/user-posts/user-posts.component';
+import { ProfileComponent } from './components/profile/profile.component';
+
+export function initializeApp(authService: AuthService) {
+  return () => authService.getProfile().toPromise();
+}
 
 @NgModule({
-  declarations: [AppComponent, LoginFormComponent, HomeComponent, RegisterFormComponent],
+  declarations: [
+    AppComponent,
+    LoginFormComponent,
+    HomeComponent,
+    RegisterFormComponent,
+    NavbarComponent,
+    UserPostsComponent,
+    ProfileComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -19,7 +34,15 @@ import { RegisterFormComponent } from './components/register-form/register-form.
     HttpClientModule,
     ReactiveFormsModule,
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [AuthService],
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

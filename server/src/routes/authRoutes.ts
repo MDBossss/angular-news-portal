@@ -9,7 +9,7 @@ router.use(express.json());
 
 router.post("/register", authController.register);
 router.post("/login", authController.login);
-router.get("/logout", authController.logout);
+router.get("/logout", verifyToken, authController.logout);
 router.get("/current", verifyToken, authController.getCurrentUser);
 
 export default router;

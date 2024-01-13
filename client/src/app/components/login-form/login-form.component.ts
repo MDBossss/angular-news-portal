@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,13 +10,16 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login-form.component.scss'],
 })
 export class LoginFormComponent {
+  user!: User;
+
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
 
   constructor(private authService: AuthService, private router: Router) {
-    if (this.authService.getCurrentUser()) this.router.navigate(['/']);
+    const user = localStorage.getItem('user');
+    if (user) router.navigate(['/']);
   }
 
   get email() {
@@ -31,8 +35,10 @@ export class LoginFormComponent {
       .login(this.loginForm.value.email!, this.loginForm.value.password!)
       .subscribe(
         (response) => {
-          this.authService.setCurrentUser((response as any).user);
+          const user = (response.body as any).user;
+          localStorage.setItem('user', JSON.stringify(user));
           this.router.navigate(['/']);
+          this.authService.setCurrentUser(user);
         },
         (error) => {
           console.error('Login error', error);
