@@ -10,7 +10,6 @@ export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(): Observable<boolean> {
-    console.log(this.authService.getCurrentUser())
     if (this.authService.getCurrentUser() !== null) {
       return of(true);
     } else {

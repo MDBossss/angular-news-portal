@@ -5,9 +5,35 @@ import jwt from "jsonwebtoken";
 import { User } from "@prisma/client";
 
 class AuthController {
+  async getCurrentUser(req: Request, res: Response) {
+    try {
+      const userId = (req as any).userId;
+
+      console.log(userId);
+
+      const currentUser = await prisma.user.findFirst({
+        where: {
+          id: userId,
+        },
+      });
+
+      if (!currentUser) {
+        return res.status(401).json({ message: "There is no such user." });
+      }
+
+      console.log(currentUser);
+      res.status(200).json(currentUser);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
+
   async register(req: Request, res: Response) {
     try {
       const { firstName, lastName, email, password }: User = req.body;
+
+      console.log(firstName, lastName, email, password);
 
       const existingUser = await prisma.user.findFirst({
         where: { email },
@@ -29,8 +55,6 @@ class AuthController {
       });
 
       res.status(201).json(newUser);
-
-      res.status(200).json();
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Internal Server Error" });
@@ -59,11 +83,34 @@ class AuthController {
         expiresIn: "12h",
       });
 
-      res.status(200).json({ message: "Login successfull", token });
+      console.log(
+        `User logged in, id: ${user.id} with token ${token} that expires in ${new Date(
+          Date.now() + 43200 * 1000
+        )}`
+      );
+
+      res.cookie("jwtToken", token, {
+        expires: new Date(Date.now() + 43200 * 1000),
+        httpOnly: true,
+        sameSite: "none",
+        secure: true,
+      });
+
+      res.status(200).json({ message: "Login successfull", user });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Internal Server Error" });
     }
+  }
+
+  async logout(req: Request, res: Response) {
+    res.cookie("jwtToken", "logout", {
+      expires: new Date(Date.now() + 2 * 1000),
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+    });
+    return res.status(200).json({ message: "Success" });
   }
 }
 
