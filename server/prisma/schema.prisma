@@ -9,3 +9,45 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        String    @id @default(uuid())
+  firstName String
+  lastName  String
+  email     String    @unique
+  password  String
+  posts     Post[]
+  comments  Comment[]
+  isAdmin   Boolean?  @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Post {
+  id         String    @id @default(uuid())
+  title      String
+  content    String    @db.LongText
+  comments   Comment[]
+  categoryId String
+  category   Category  @relation(fields: [categoryId], references: [id])
+  authorId   String
+  author     User      @relation(fields: [authorId], references: [id])
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model Category {
+  id    String @id @default(uuid())
+  title String
+  Post  Post[]
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  userId    String?
+  User      User?    @relation(fields: [userId], references: [id])
+  postId    String?
+  Post      Post?    @relation(fields: [postId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
