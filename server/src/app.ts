@@ -5,6 +5,9 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import userRoutes from "./routes/userRoutes";
 import authRoutes from "./routes/authRoutes";
+import postRoutes from "./routes/postRoutes";
+import commentRoutes from "./routes/commentRoutes";
+import categoryRoutes from "./routes/categoryRoutes";
 
 config();
 
@@ -24,8 +27,9 @@ app.use(cookieParser());
 //Routes
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
-// app.use("/api/posts",postRoutes);
-// app.use("/api/comments",commentRoutes);
+app.use("/api/posts", postRoutes);
+app.use("/api/comments", commentRoutes);
+app.use("/api/categories", categoryRoutes);
 
 //Error handling middleware
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {

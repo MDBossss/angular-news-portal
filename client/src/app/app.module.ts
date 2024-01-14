@@ -7,12 +7,16 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './components/home/home.component';
-import { AuthService } from './services/auth.service';
+import { AuthService } from './services/auth/auth.service';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { UserPostsComponent } from './components/user-posts/user-posts.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { PostComponent } from './components/post/post.component';
+import { CommentComponent } from './components/comment/comment.component';
+import { UserImageComponent } from './components/user-image/user-image.component';
+import { CreatePostComponent } from './components/create-post/create-post.component';
 
 export function initializeApp(authService: AuthService) {
   return () => authService.getProfile().toPromise();
@@ -28,6 +32,10 @@ export function initializeApp(authService: AuthService) {
     UserPostsComponent,
     ProfileComponent,
     AdminComponent,
+    PostComponent,
+    CommentComponent,
+    UserImageComponent,
+    CreatePostComponent,
   ],
   imports: [
     BrowserModule,

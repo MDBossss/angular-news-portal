@@ -7,6 +7,7 @@ import { RegisterFormComponent } from './components/register-form/register-form.
 import { UserPostsComponent } from './components/user-posts/user-posts.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { CreatePostComponent } from './components/create-post/create-post.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
   },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+  { path: 'create', component: CreatePostComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
