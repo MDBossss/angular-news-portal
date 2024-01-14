@@ -12,6 +12,7 @@ import { RegisterFormComponent } from './components/register-form/register-form.
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { UserPostsComponent } from './components/user-posts/user-posts.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 export function initializeApp(authService: AuthService) {
   return () => authService.getProfile().toPromise();
@@ -26,6 +27,7 @@ export function initializeApp(authService: AuthService) {
     NavbarComponent,
     UserPostsComponent,
     ProfileComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
