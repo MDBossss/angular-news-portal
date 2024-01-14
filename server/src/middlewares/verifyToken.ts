@@ -8,8 +8,8 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
       return res.status(401).json("Missing token.");
     }
 
-    const decoded: any = jwt.verify(token, process.env.SECRET as string);
-    (req as any).userId = decoded.id;
+    const decoded = jwt.verify(token, process.env.SECRET as string);
+    (req as any).userId = (decoded as any).userId;
     next();
   } catch (err) {
     return res.status(401).json("Bad token.");

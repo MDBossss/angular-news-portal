@@ -9,8 +9,6 @@ class AuthController {
     try {
       const userId = (req as any).userId;
 
-      console.log(userId);
-
       const currentUser = await prisma.user.findFirst({
         where: {
           id: userId,
