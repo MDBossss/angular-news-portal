@@ -17,6 +17,7 @@ import { PostComponent } from './components/post/post.component';
 import { CommentComponent } from './components/comment/comment.component';
 import { UserImageComponent } from './components/user-image/user-image.component';
 import { CreatePostComponent } from './components/create-post/create-post.component';
+import { PostPreviewComponent } from './components/post-preview/post-preview.component';
 
 export function initializeApp(authService: AuthService) {
   return () => authService.getProfile().toPromise();
@@ -36,6 +37,7 @@ export function initializeApp(authService: AuthService) {
     CommentComponent,
     UserImageComponent,
     CreatePostComponent,
+    PostPreviewComponent,
   ],
   imports: [
     BrowserModule,

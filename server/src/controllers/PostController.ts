@@ -11,7 +11,22 @@ class PostController {
   async getAllPosts(req: Request, res: Response) {
     try {
       const posts = await prisma.post.findMany({
-        include: { author: true, category: true, comments: true },
+        include: { author: true, category: true, comments: { orderBy: { updatedAt: "asc" } } },
+      });
+
+      res.status(200).json(posts);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
+
+  async getUserPosts(req: Request, res: Response) {
+    try {
+      const { userId } = req.params;
+      const posts = await prisma.post.findMany({
+        where: { authorId: userId },
+        include: { author: true, category: true, comments: { orderBy: { updatedAt: "asc" } } },
       });
 
       res.status(200).json(posts);
@@ -27,7 +42,11 @@ class PostController {
 
       const post = await prisma.post.findUnique({
         where: { id },
-        include: { author: true, category: true, comments: true },
+        include: {
+          author: true,
+          category: true,
+          comments: { include: { author: true }, orderBy: { updatedAt: "asc" } },
+        },
       });
 
       if (!post) {

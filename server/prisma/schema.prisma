@@ -47,10 +47,10 @@ model Category {
 model Comment {
   id        String   @id @default(uuid())
   content   String
-  userId    String?
-  User      User?    @relation(fields: [userId], references: [id])
-  postId    String?
-  Post      Post?    @relation(fields: [postId], references: [id])
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+  postId    String
+  Post      Post     @relation(fields: [postId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

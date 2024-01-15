@@ -7,8 +7,9 @@ const commentController = new CommentController();
 
 router.use(express.json());
 
-router.get("/:postId", commentController.getCommentsByPostId);
+router.get("/post/:postId", commentController.getCommentsByPostId);
 router.get("/:id", commentController.getCommentById);
+router.post("/", commentController.createComment);
 router.put("/:id", verifyToken, commentController.updateComment);
 router.delete("/:id", verifyToken, commentController.deleteComment);
 

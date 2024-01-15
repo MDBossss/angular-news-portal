@@ -1,4 +1,4 @@
-<div class="px-4 py-6 md:px-6 lg:py-16 md:py-12" data-id="1">
+<div *ngIf="post" class="px-4 py-6 md:px-6 lg:py-16 md:py-12" data-id="1">
   <div class="flex items-center gap-4 mb-6" data-id="2">
     <app-user-image [user]="post.author" />
     <div class="grid gap-0.5 text-sm" data-id="6">
@@ -29,15 +29,44 @@
         data-id="15"
       />
     </figure>
-    <p data-id="17">
+    <p
+      class="px-2 py-1 mt-2 text-xs text-center text-white bg-blue-500 min-w-12 rounded-xl w-fit"
+    >
+      {{ post.category.title }}
+    </p>
+    <p data-id="17" class="mt-2">
       {{ post.content }}
     </p>
   </article>
   <div class="mt-8" data-id="18">
-    <h2 class="text-xl font-semibold" data-id="19">Comments</h2>
+    <div class="flex items-center justify-between p-6">
+      <h2 class="text-xl font-semibold" data-id="19">Comments</h2>
+      <button
+        class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium text-white transition-colors bg-gray-800 border rounded-md hover:bg-gray-900 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground"
+        (click)="onSubmit()"
+        [disabled]="!commentForm.valid"
+      >
+        Add comment
+      </button>
+    </div>
 
-    <ng-container *ngFor="let comment of post.comments">
+    <form class="space-y-2" [formGroup]="commentForm">
+      <textarea
+        class="flex w-full h-20 px-3 py-2 text-sm border rounded-md border-input bg-background ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+        id="content"
+        placeholder="Enter content here..."
+        required=""
+        type="email"
+        formControlName="comment"
+        (resize)="(false)"
+      ></textarea>
+    </form>
+
+    <ng-container *ngFor="let comment of post.comments.reverse()">
       <app-comment [comment]="comment" />
+      <div *ngIf="post.comments.length < 1" class="italic text-center">
+        There is no comments yet! 😓
+      </div>
     </ng-container>
   </div>
 </div>

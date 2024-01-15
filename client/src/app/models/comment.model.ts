@@ -1,9 +1,10 @@
 import { User } from './user.model';
 
 export interface Comment {
-  id: string;
+  id?: string;
   content: string;
-  User: User;
+  author: User;
+  postId: string;
   createdAt: Date;
   updatedAt: Date;
 }

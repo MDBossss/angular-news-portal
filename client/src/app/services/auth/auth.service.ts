@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 type ResponseObserveType = 'response';
 
 @Injectable({
@@ -15,7 +16,7 @@ export class AuthService {
   );
   public currentUser$: Observable<any> = this.currentUserSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   login(email: string, password: string) {
     let loginHttpOptions = {
@@ -77,7 +78,9 @@ export class AuthService {
             },
             () => {
               // Handle errors or set the current user to null if no valid token is found
+              localStorage.removeItem('user');
               this.currentUserSubject.next(null);
+              this.router.navigate(['/login']);
             }
           )
         );

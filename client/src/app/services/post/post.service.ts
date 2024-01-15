@@ -20,6 +20,10 @@ export class PostService {
     return this.http.get<PostWithComments>(`${this.apiUrl}/api/posts/${id}`);
   }
 
+  getUserPosts(userId: string): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.apiUrl}/api/posts/user/${userId}`);
+  }
+
   createPost(post: Post): Observable<Post> {
     return this.http.post<Post>(`${this.apiUrl}/api/posts`, post, {
       withCredentials: true,

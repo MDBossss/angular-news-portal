@@ -1,0 +1,36 @@
+<article
+  class="p-6 border rounded-lg shadow-sm bg-card text-card-foreground"
+  data-v0-t="card"
+>
+  <div class="flex flex-col space-y-1.5 mb-2">
+    <h3 class="text-2xl font-semibold leading-none tracking-tight">
+      {{ post.title }}
+    </h3>
+    <p class="text-sm text-gray-500">
+      Posted on {{ post.updatedAt | date : "MMMM d, y" }}
+    </p>
+  </div>
+  <figure data-id="14">
+    <img
+      [src]="post.imageUrl"
+      alt="AI Image"
+      class="object-cover w-full aspect-video"
+      data-id="15"
+    />
+  </figure>
+  <p
+    class="px-2 py-1 mt-2 text-xs text-center text-white bg-blue-500 min-w-12 rounded-xl w-fit"
+  >
+    {{ post.category.title }}
+  </p>
+  <div class="flex items-center">
+    <button
+      class="inline-flex items-center justify-center h-10 px-4 py-2 mt-6 text-sm font-medium text-white transition-colors bg-gray-800 rounded-md hover:bg-gray-900 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90"
+      as="a"
+      href="#"
+      [routerLink]="['/post', post.id]"
+    >
+      Read More
+    </button>
+  </div>
+</article>

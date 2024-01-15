@@ -1,3 +1,15 @@
-<ng-container *ngFor="let post of posts">
-  <app-post [post]="post"></app-post>
-</ng-container>
+<div class="flex items-center justify-between p-6 border-b border-input">
+  <h2 class="text-3xl font-semibold" data-id="19">Posts</h2>
+  <button
+    class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium text-white transition-colors bg-gray-800 border rounded-md hover:bg-gray-900 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground"
+    routerLink="/create"
+  >
+    Create post
+  </button>
+</div>
+
+<section class="grid gap-6 p-4 md:grid-cols-2 lg:grid-cols-3 md:p-6">
+  <ng-container *ngFor="let post of posts">
+    <app-post-preview [post]="post" />
+  </ng-container>
+</section>

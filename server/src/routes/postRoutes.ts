@@ -9,6 +9,7 @@ router.use(express.json());
 
 router.get("/", postController.getAllPosts);
 router.get("/:id", postController.getPostById);
+router.get("/user/:userId", postController.getUserPosts);
 router.post("/", verifyToken, postController.createPost);
 router.put("/:id", verifyToken, postController.updatePost);
 router.delete("/:id", verifyToken, postController.deletePost);
