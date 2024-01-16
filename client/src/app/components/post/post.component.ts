@@ -76,4 +76,10 @@ export class PostComponent {
       );
     }
   }
+
+  handleDeleteComment(id: string) {
+    this.post.comments = this.post.comments.filter(
+      (comment) => comment.id !== id
+    );
+  }
 }

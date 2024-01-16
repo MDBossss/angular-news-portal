@@ -69,10 +69,10 @@ class CommentControler {
   async updateComment(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      const { ...commentData }: Comment = req.body;
+      const { content, updatedAt }: CommentWithAuthor = req.body;
       const updatedComment = await prisma.comment.update({
         where: { id },
-        data: { ...commentData },
+        data: { content, updatedAt },
       });
       res.status(200).json(updatedComment);
     } catch (error) {
