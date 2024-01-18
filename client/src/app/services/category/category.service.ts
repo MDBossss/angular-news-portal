@@ -15,4 +15,10 @@ export class CategoryService {
   getAllCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(`${this.apiUrl}/api/categories`);
   }
+
+  createCategory(category: Category): Observable<Category> {
+    return this.http.post<Category>(`${this.apiUrl}/api/categories`, category, {
+      withCredentials: true,
+    });
+  }
 }

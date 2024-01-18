@@ -18,6 +18,7 @@ import { CommentComponent } from './components/comment/comment.component';
 import { UserImageComponent } from './components/user-image/user-image.component';
 import { CreatePostComponent } from './components/create-post/create-post.component';
 import { PostPreviewComponent } from './components/post-preview/post-preview.component';
+import { TimeAgoPipe } from './pipes/time-ago.pipe';
 
 export function initializeApp(authService: AuthService) {
   return () => authService.getProfile().toPromise();
@@ -38,6 +39,7 @@ export function initializeApp(authService: AuthService) {
     UserImageComponent,
     CreatePostComponent,
     PostPreviewComponent,
+    TimeAgoPipe,
   ],
   imports: [
     BrowserModule,

@@ -1,1 +1,61 @@
-<p>admin works!</p>
+<section class="flex flex-col p-5 mt-20 border-b">
+  <h1 class="text-3xl">Admin panel</h1>
+  <p class="text-sm text-gray-500">Edit and create categories</p>
+</section>
+
+<section *ngIf="categories" class="flex gap-1">
+  <ng-container *ngFor="let category of categories">
+    <p
+      class="px-2 py-1 mt-2 text-xs text-center text-white bg-blue-500 min-w-12 rounded-xl w-fit"
+    >
+      {{ category.title }}
+    </p>
+  </ng-container>
+</section>
+
+<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+  <div class="p-6 space-y-4">
+    <div class="space-y-2">
+      <h3 class="text-xl font-medium">Category title:</h3>
+      <input
+        class="flex w-full h-10 px-3 py-2 text-sm border rounded-md border-input bg-background ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+        id="email"
+        placeholder="Enter category title:"
+        required=""
+        formControlName="title"
+        trim
+      />
+      <p
+        class="text-xs text-center text-red-500"
+        *ngIf="title?.errors?.['required'] && title?.touched"
+      >
+        Please provide a title.
+      </p>
+    </div>
+
+    <div class="space-y-2">
+      <h3 class="text-xl font-medium">Category description:</h3>
+      <input
+        class="flex w-full h-10 px-3 py-2 text-sm border rounded-md border-input bg-background ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+        id="email"
+        placeholder="Enter category description:"
+        required=""
+        formControlName="description"
+        trim
+      />
+      <p
+        class="text-xs text-center text-red-500"
+        *ngIf="description?.errors?.['required'] && description?.touched"
+      >
+        Please provide a description.
+      </p>
+    </div>
+  </div>
+  <button
+    class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium text-white transition-colors bg-gray-800 border rounded-md hover:bg-gray-900 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground"
+    type="submit"
+    [disabled]="!categoryForm.valid"
+  >
+    Create category
+  </button>
+</form>

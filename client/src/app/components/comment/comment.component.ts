@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Comment } from 'src/app/models/comment.model';
 import { CommentService } from 'src/app/services/comment/comment.service';
-import { getTimeAgo } from 'src/app/utils/date';
 
 @Component({
   selector: 'app-comment',
@@ -38,6 +37,4 @@ export class CommentComponent {
       this.deleteComment.emit(this.comment.id!);
     });
   }
-
-  getTimeAgo = getTimeAgo;
 }

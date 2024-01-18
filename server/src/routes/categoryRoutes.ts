@@ -10,6 +10,7 @@ router.use(express.json());
 router.get("/", categoryController.getAllCategories);
 router.get("/:id", categoryController.getCategoryById);
 router.put("/:id", verifyToken, categoryController.updateCategory);
+router.post("/", verifyToken, categoryController.createCategory);
 router.delete("/:id", verifyToken, categoryController.deleteCategory);
 
 export default router;

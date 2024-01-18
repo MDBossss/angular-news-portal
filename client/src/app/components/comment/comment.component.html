@@ -6,7 +6,7 @@
         {{ comment.author.firstName }} {{ comment.author.lastName }}
       </div>
       <div class="text-sm text-gray-500 dark:text-gray-400" data-id="27">
-        {{ getTimeAgo(comment.updatedAt) }}
+        {{ comment.updatedAt | timeAgo }}
       </div>
       <div
         *ngIf="!this.isEditing"

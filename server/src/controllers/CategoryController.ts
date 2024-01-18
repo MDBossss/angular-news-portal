@@ -45,6 +45,24 @@ class CategoryController {
     }
   }
 
+  async createCategory(req: Request, res: Response) {
+    try {
+      const category: Category = req.body;
+
+      const newCategory = await prisma.category.create({
+        data: {
+          title: category.title,
+          description: category.description,
+        },
+      });
+
+      res.status(201).json(newCategory);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
+
   async deleteCategory(req: Request, res: Response) {
     try {
       const { id } = req.params;
