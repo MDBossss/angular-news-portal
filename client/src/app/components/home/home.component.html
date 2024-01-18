@@ -13,3 +13,9 @@
     <app-post-preview [post]="post" />
   </ng-container>
 </section>
+
+<section *ngIf="!posts || posts.length < 1">
+  <h1 class="mt-20 text-3xl text-center text-gray-500">
+    😓 There aren't any posts yet!
+  </h1>
+</section>
