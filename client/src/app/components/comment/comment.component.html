@@ -9,7 +9,7 @@
         {{ comment.updatedAt | timeAgo }}
       </div>
       <div
-        *ngIf="!this.isEditing"
+        *ngIf="!this.isEditing && currentUser.id === comment.author.id"
         class="hidden cursor-pointer group-hover:block"
         (click)="this.isEditing = true"
       >
@@ -29,7 +29,7 @@
         </svg>
       </div>
       <div
-        *ngIf="this.isEditing"
+        *ngIf="this.isEditing && currentUser.id === comment.author.id"
         class="hidden cursor-pointer group-hover:block"
         (click)="this.isEditing = false"
       >

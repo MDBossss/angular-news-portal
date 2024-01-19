@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Comment } from 'src/app/models/comment.model';
+import { User } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { CommentService } from 'src/app/services/comment/comment.service';
 
 @Component({
@@ -13,10 +15,18 @@ export class CommentComponent {
 
   isEditing: boolean = false;
   editedComment: string = '';
+  currentUser!: User;
 
-  constructor(private commentService: CommentService) {}
+  constructor(
+    private commentService: CommentService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
+    this.authService.currentUser$.subscribe(
+      (user) => (this.currentUser = user)
+    );
+
     this.editedComment = this.comment.content;
   }
 
